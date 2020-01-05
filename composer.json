@@ -8,5 +8,18 @@
             "email": "Masudrana917775@gmail.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "require-dev": {
+        "orchestra/testbench": "^4.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "masud\\Press\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "masud\\Press\\Tests\\": "tests/"
+        }
+    },
 }
