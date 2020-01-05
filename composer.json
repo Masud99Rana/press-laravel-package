@@ -1,0 +1,12 @@
+{
+    "name": "masud99rana/press",
+    "description": "A markdown based blog for Artisan",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Masud99Rana",
+            "email": "Masudrana917775@gmail.com"
+        }
+    ],
+    "require": {}
+}
