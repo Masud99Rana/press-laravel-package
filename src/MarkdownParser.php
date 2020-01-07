@@ -14,7 +14,6 @@ class MarkdownParser
     {   
         // $parsedown = new Parsedown;
         // return $parsedown->text($string);
-        
         return Parsedown::instance()->text($string);
     }
 }
