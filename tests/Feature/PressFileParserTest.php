@@ -3,7 +3,7 @@ namespace masud\Press\Tests;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
-use Orchestra\Testbench\TestCase;
+// use Orchestra\Testbench\TestCase;
 use masud\Press\PressFileParser;
 
 class PressFileParserTest extends TestCase{

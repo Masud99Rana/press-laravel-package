@@ -1,7 +1,7 @@
 <?php
 namespace masud\Press\Tests;
 
-use Orchestra\Testbench\TestCase;
+// use Orchestra\Testbench\TestCase;
 use Parsedown;
 use masud\Press\MarkdownParser;
 
