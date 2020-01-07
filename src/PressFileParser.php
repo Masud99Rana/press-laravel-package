@@ -20,7 +20,7 @@ class PressFileParser{
 	/**
 	 * @var array
 	 */
-	// protected $data;
+	protected $rawData;
 	
 
 	/**
@@ -40,13 +40,18 @@ class PressFileParser{
 	public function getData()
 	{
 		return $this->data;
+	}	
+
+	public function getRawData()
+	{
+		return $this->rawData;
 	}
 
 	protected function splitFile()
 	{	
 		preg_match('/^\-{3}(.*?)\-{3}(.*)/s',
             File::exists($this->filename) ? File::get($this->filename) : $this->filename,
-            $this->data
+            $this->rawData
         );
 
         // dd($this->data);
@@ -64,13 +69,13 @@ class PressFileParser{
 		
 		// dd(explode("\n", trim($this->data[1])));
 		
-		foreach (explode("\n", trim($this->data[1])) as $fieldString) {
+		foreach (explode("\n", trim($this->rawData[1])) as $fieldString) {
 		    preg_match('/(.*):\s?(.*)/', $fieldString, $fieldArray);
 		    $this->data[$fieldArray[1]] = trim($fieldArray[2]);
 		}
 
 		// dd(trim($this->data[2]));
-		$this->data['body'] = trim($this->data[2]);
+		$this->data['body'] = trim($this->rawData[2]);
 
 	}
 
@@ -81,17 +86,12 @@ class PressFileParser{
 			
 			$class = "masud\\Press\\Fields\\" . ucwords($field);
 
-			if(class_exists($class) && method_exists($class, 'process')){
-					
-				$processedData= $class::process($field, $value);
-				if($field === 'date'){
-					$this->data['date'] = $processedData;
-				}else{
-					// dd($processedData);
-					$this->data = array_merge($this->data, $processedData);
-				}
+			if(! class_exists($class) &&  ! method_exists($class, 'process')){
+				$class = "masud\\Press\\Fields\\Extra";	
 			}
 			
+			$processedData= $class::process($field, $value, $this->data);
+			$this->data = array_merge($this->data, $processedData);
 		}
 	}
 

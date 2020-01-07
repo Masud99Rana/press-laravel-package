@@ -15,7 +15,7 @@ class PressFileParserTest extends TestCase{
         
         $pressFileParser = (new PressFileParser($filePath));
 
-        $data = $pressFileParser->getData();
+        $data = $pressFileParser->getRawData();
         
         $this->assertStringContainsString('title: My Title', $data[1]);
         $this->assertStringContainsString('description: Description here', $data[1]);
@@ -26,7 +26,7 @@ class PressFileParserTest extends TestCase{
     public function a_string_can_also_be_used_instead()
     {
         $pressFileParser = (new PressFileParser("---\ntitle: My Title\n---\nBlog post body here"));
-        $data = $pressFileParser->getData();
+        $data = $pressFileParser->getRawData();
         $this->assertStringContainsString('title: My Title', $data[1]);
         $this->assertStringContainsString('Blog post body here', $data[2]);
     }
@@ -64,8 +64,28 @@ class PressFileParserTest extends TestCase{
     {
         $pressFileParser = (new PressFileParser("---\ndate: January 7, 2020\n---\n"));
         $data = $pressFileParser->getData();
-        
+
         $this->assertInstanceOf(Carbon::class, $data['date']);
         $this->assertEquals('01/07/2020', $data['date']->format('m/d/Y'));
+    }
+
+    /** @test */
+    public function an_extra_field_gets_saved()
+    {
+        $pressFileParser = (new PressFileParser("---\nauthor: Masud Rana\n---\n"));
+        
+        $data = $pressFileParser->getData();
+        
+        $this->assertEquals(json_encode(['author' => 'Masud Rana']), $data['extra']);
+    }
+
+    /** @test */
+    public function two_additional_fields_are_put_into_extra()
+    {
+        $pressFileParser = (new PressFileParser("---\nauthor: Masud Rana\nimage: img/image.jpg---\n"));
+        
+        $data = $pressFileParser->getData();
+
+        $this->assertEquals(json_encode(['author' => 'Masud Rana', 'image'=> 'img/image.jpg']), $data['extra']);
     }
 }
