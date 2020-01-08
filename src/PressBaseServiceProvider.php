@@ -2,6 +2,7 @@
 namespace masud\Press;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use masud\Press\Facades\Press;
 
 class PressBaseServiceProvider extends ServiceProvider
 {
@@ -19,13 +20,20 @@ class PressBaseServiceProvider extends ServiceProvider
         ]);
    }
 
+    /**
+     * Register the package resources.
+     *
+     * @return void
+     */
+    private function registerResources(){
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'press');
 
-   private function registerResources(){
-   	    $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-          $this->loadViewsFrom(__DIR__.'/../resources/views', 'press');
 
-          $this->registerRoutes();
-   }
+        $this->registerFacades();
+        
+        $this->registerRoutes();
+    }
 
    protected function registerPublishing(){
    		$this->publishes([
@@ -56,5 +64,17 @@ class PressBaseServiceProvider extends ServiceProvider
             'prefix' => Press::path(),
             'namespace' => 'masud\Press\Http\Controllers',
         ];
+    }
+
+    /**
+     * Register any bindings to the app.
+     *
+     * @return void
+     */
+    protected function registerFacades()
+    {
+        $this->app->singleton('Press', function ($app) {
+            return new \masud\Press\Press();
+        });
     }
 }

@@ -1,10 +1,8 @@
 <?php
 namespace masud\Press\Console;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
-use masud\Press\PressFileParser;
 use masud\Press\Post;
-use masud\Press\Press;
+use masud\Press\Facades\Press;
 use Illuminate\Support\Str;
 
 class ProcessCommand extends Command
