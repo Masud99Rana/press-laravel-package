@@ -24,5 +24,12 @@
         "psr-4": {
             "masud\\Press\\Tests\\": "tests/"
         }
+    },
+    "extra":{
+        "laravel": {
+            "providers": [
+                "masud\\Press\\PressBaseServiceProvider"
+            ]
+        }
     }
 }
