@@ -2,6 +2,7 @@
 
 return [
 	'driver' => 'file',
+	'prefix' => 'blogs',
 
 	'file' => [
 		'path' => 'blogs',
