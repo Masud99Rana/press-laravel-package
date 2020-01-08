@@ -3,7 +3,10 @@ namespace masud\Press\Console;
 use Illuminate\Console\Command;
 use masud\Press\Post;
 use masud\Press\Facades\Press;
+use masud\Press\Repositories\PostRepository;
+
 use Illuminate\Support\Str;
+
 
 class ProcessCommand extends Command
 {
@@ -22,11 +25,11 @@ class ProcessCommand extends Command
     /**
      * Execute the console command.
      *
-     * @param \vicgonvt\Press\Repositories\PostRepository $postRepository
+     * @param \masud\Press\Repositories\PostRepository $postRepository
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(PostRepository $postRepository)
     {   
         if(Press::configNotPublished()){
             return $this->warn("Please publish the config file by running 'php artisan vendor:publish --tag=press-config'");
@@ -35,16 +38,13 @@ class ProcessCommand extends Command
         try {
             $posts = Press::driver()->fetchPosts();
 
+            $this->info('Number of Posts: '. count($posts));
 
             //Persist to the DB
             foreach ($posts as $post) {
-                Post::create([
-                    'identifier' => $post['identifier'],
-                    'slug' => Str::slug($post['title']),
-                    'title' => $post['title'],
-                    'body' => $post['body'],
-                    'extra' => $post['body'] ?? []
-                ]);
+                $postRepository->save($post);
+
+                $this->info('Post title: '. $post['title']);
             }
 
         } catch (\Exception $e) {
