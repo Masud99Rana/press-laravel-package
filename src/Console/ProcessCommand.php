@@ -41,7 +41,7 @@ class ProcessCommand extends Command
             //Persist to the DB
             foreach ($posts as $post) {
                 Post::create([
-                    'identifier' => Str::random(),
+                    'identifier' => $post['identifier'],
                     'slug' => Str::slug($post['title']),
                     'title' => $post['title'],
                     'body' => $post['body'],

@@ -3,7 +3,7 @@ namespace masud\Press\Drivers;
 
 use Illuminate\Support\Facades\File;
 use masud\Press\Exceptions\FileDriverDirectoryNotFoundException;
-use masud\Press\PressFileParser;
+use Illuminate\Support\Str; 
 
 class FileDriver extends Driver
 {
@@ -14,7 +14,8 @@ class FileDriver extends Driver
 
     	//Process each file
     	foreach ($files as $file) {
-    	    $this->posts[] = (new PressFileParser($file->getPathname()))->getData();
+    	    
+            $this->parse($file->getPathname(), $file->getFilename());
     	}
 
     	return $this->posts;
