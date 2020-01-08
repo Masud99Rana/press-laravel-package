@@ -6,6 +6,11 @@ use masud\Press\Facades\Press;
 
 class PressBaseServiceProvider extends ServiceProvider
 {
+    /**
+     * Bootstrap any package services.
+     *
+     * @return void
+     */
    public function boot(){
 
    		if ($this->app->runningInConsole()) {
@@ -14,6 +19,11 @@ class PressBaseServiceProvider extends ServiceProvider
 		$this->registerResources();
    }
 
+   /**
+    * Register any application services.
+    *
+    * @return void
+    */
    public function register(){
    		$this->commands([
             Console\ProcessCommand::class,
@@ -36,7 +46,12 @@ class PressBaseServiceProvider extends ServiceProvider
 
         $this->registerFields();
     }
-
+    
+    /**
+     * Register the package's publishable resources.
+     *
+     * @return void
+     */
    protected function registerPublishing(){
    		$this->publishes([
    			__DIR__.'/../config/press.php' => config_path('press.php'),
