@@ -33,12 +33,18 @@ class PressBaseServiceProvider extends ServiceProvider
         $this->registerFacades();
         
         $this->registerRoutes();
+
+        $this->registerFields();
     }
 
    protected function registerPublishing(){
    		$this->publishes([
    			__DIR__.'/../config/press.php' => config_path('press.php'),
    		], 'press-config');
+
+        $this->publishes([
+            __DIR__.'/Console/stubs/PressServiceProvider.stub' => app_path('Providers/PressServiceProvider.php'),
+        ], 'press-provider');
    }
 
     /**
@@ -76,5 +82,24 @@ class PressBaseServiceProvider extends ServiceProvider
         $this->app->singleton('Press', function ($app) {
             return new \masud\Press\Press();
         });
+    }
+
+    /**
+     * Register any default fields to the app.
+     *
+     * @return void
+     */
+    private function registerFields()
+    {   
+        // every item will get namespace of thie file namespce
+        // masud\Press\Fields\Body
+        
+        Press::fields([
+            Fields\Body::class,
+            Fields\Date::class,
+            Fields\Description::class,
+            Fields\Extra::class,
+            Fields\Title::class,
+        ]);
     }
 }

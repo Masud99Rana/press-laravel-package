@@ -1,9 +1,9 @@
 <?php
 namespace masud\Press;
 
-use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use masud\Press\MarkdownParser;
+use ReflectionClass;
 
 class PressFileParser{
 
@@ -84,7 +84,7 @@ class PressFileParser{
 		foreach ($this->data as $field => $value) {
 			// Date::process($field, $value)// field = date, value = 'January 07, 2020';
 			
-			$class = "masud\\Press\\Fields\\" . ucwords($field);
+			$class = $this->getField(ucwords($field));
 
 			if(! class_exists($class) &&  ! method_exists($class, 'process')){
 				$class = "masud\\Press\\Fields\\Extra";	
@@ -92,6 +92,19 @@ class PressFileParser{
 			
 			$processedData= $class::process($field, $value, $this->data);
 			$this->data = array_merge($this->data, $processedData);
+		}
+	}
+
+	private function getField($field){
+		// dd(\masud\Press\Facades\Press::availableFields());
+
+		foreach (\masud\Press\Facades\Press::availableFields() as $availableField) {
+			$class = new ReflectionClass($availableField);
+
+			if($class->getShortName() == $field){
+				return $class->getName();
+			}
+
 		}
 	}
 
