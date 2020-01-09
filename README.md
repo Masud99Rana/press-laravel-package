@@ -66,7 +66,7 @@ Goal:
 
 Of course, I have achieved most of the goals in this project. Let's Cheers. :smile:
 
-Here, the package is stored for future reference. It may also help who want to build or need a Laravel Package which converts markdown to html and store the converted html in the database.
+Here, the package is stored for future reference. It may also help who wants to build or needs a Laravel Package which converts markdown to html and store the converted html in the database.
 
 > **Note: I will publish this package on packagist soon. I will make different version following Semantic Versioning**
 
