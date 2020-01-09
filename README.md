@@ -70,7 +70,6 @@ Here, the package is stored for future reference. It may also help who want to b
 
 > **Note: I will publish this package on packagist soon. I will make different version following Semantic Versioning**
 
-<b> :warning: This source code may not be production ready. Use at your own risk.</b>
 
 ### Built With
 The major technologies that i have used to build this project.
@@ -95,6 +94,8 @@ Here are:
 ## Getting Started
 
 To get a local copy up and running follow these simple example steps.
+
+> **Be warned: This source code may not be production ready. Use at your own risk.**
 
 ### Prerequisites
 
